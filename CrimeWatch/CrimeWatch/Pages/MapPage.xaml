@@ -13,7 +13,7 @@
                    MapType="Street"/>
 
         <!--Searching Animation views-->
-        <Frame BackgroundColor="Black" Opacity="0.8" IsVisible="False" x:Name="overlay" CornerRadius="0"/>
+        <Frame BackgroundColor="Black" Opacity="0.9" IsVisible="False" x:Name="overlay" CornerRadius="0"/>
         <Frame Opacity="0.2" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="DarkOrange" HeightRequest="300" WidthRequest="300" CornerRadius="250" IsVisible="False" x:Name="circle3"/>
         <Frame Opacity="0.4" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="DarkOrange" HeightRequest="215" WidthRequest="215" CornerRadius="130" IsVisible="False" x:Name="circle2"/>
         <Frame Opacity="0.7" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="DarkOrange" HeightRequest="130" WidthRequest="130" CornerRadius="120" IsVisible="False" x:Name="circle1"/>

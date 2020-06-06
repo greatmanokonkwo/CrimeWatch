@@ -77,31 +77,25 @@ namespace CrimeWatch
             // Create Pins 
             await CreatePins();
 
-            if (crimeMap.Pins.Count > 0)
-            {
-                var incident = crimeMap.Pins.First();
-
-                // Move map to Location with crime pins
-                MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(incident.Position.Latitude, incident.Position.Longitude), Distance.FromKilometers(4));
-                crimeMap.MoveToRegion(mapSpan);
-            }
-
             activityIndicator.IsRunning = false;
         }
 
-        protected async Task CreatePins() 
+        protected async Task CreatePins()
         {
             // Get list of crime incidents from local database, filtering according to the requested filter 
-            List<Incident> incidents = await CrimeFilterer.Filter();
+            Incident[] incidents = (await CrimeFilterer.Filter()).ToArray();
 
-            numOfIncidentsLabel.Text = $"{incidents.Count} Incidents";
+            numOfIncidentsLabel.Text = $"{incidents.Length} Incidents";
             InfoFrame.BackgroundColor = IncidentTypeInfo.GetIncidentColor();
 
             crimeMap.Pins.Clear();
 
             // Create a pin for each for incident
-            foreach (Incident incident in incidents)
+            for (int i = 0; i < incidents.Length; i++)
             {
+
+                Incident incident = incidents[i];
+
                 // initialize pin
                 CustomPin pin = new CustomPin
                 {
@@ -112,11 +106,17 @@ namespace CrimeWatch
                 };
 
                 // add pin
-
                 crimeMap.Pins.Add(pin);
+                if (crimeMap.Pins.Count > 0)
+                {
+                    var lastPin = crimeMap.Pins.First();
+
+                    // Move map to Location with crime pins
+                    MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(lastPin.Position.Latitude, lastPin.Position.Longitude), Distance.FromKilometers(4));
+                    crimeMap.MoveToRegion(mapSpan);
+                }
 
             }
-
         }
 
         async void SearchForCrime()
@@ -138,17 +138,21 @@ namespace CrimeWatch
                 incidentData = await _restService.GetCrimeDataAsync(await GenerateRequestUri());
             }
 
-            FillProperties(incidentData);
+            Incident[] incidents = incidentData.Incidents;
+
+            FillProperties(incidents);
 
             App.Database.ClearIncidents();
 
             // For each incident, initialize a corresponding pin and add to map's list of pins
-            foreach (Incident incident in incidentData.Incidents) 
+            for (int i=0; i < incidents.Length; i++) 
             {
+                Incident incident = incidentData.Incidents[i];
+
+                DetectedLabel.Text = $"{incident.Type} Found";
+
                 // Save Incident to Database
                 await App.Database.SaveIncidentAsync(incident);
-
-                DetectedLabel.Text = $"{incident.Type} found";
             }
 
             // stop search animation
@@ -163,10 +167,12 @@ namespace CrimeWatch
             await CreatePins();
         }
 
-        private async Task FillProperties(IncidentData incidentData) 
+        private async Task FillProperties(Incident[] incidents) 
         {
-            foreach (Incident incident in incidentData.Incidents)
+            for (int i = 0; i < incidents.Length; i++)
             {
+                Incident incident = incidents[i];
+
                 // Set properties for incidents
                 incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
                 incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");

@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace CrimeWatch.Droid
 {
-    [Activity(Label = "Crime Watch", Icon = "@mipmap/CrimeWatchLogo", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Crime Watch", Icon = "@mipmap/CrimeWatchLogo", RoundIcon = "@mipmap/CrimeWatchLogoRound", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         const int RequestLocationId = 0;

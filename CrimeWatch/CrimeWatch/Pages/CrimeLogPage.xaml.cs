@@ -60,7 +60,7 @@ namespace CrimeWatch.Pages
 
             listView.ItemsSource = new List<Incident>();
 
-            numOfIncidentsLabel.Text = $"0 Incidents";
+            numOfIncidentsLabel.Text = "0 Incidents";
 
             activityIndicator.IsRunning = false;
         }
