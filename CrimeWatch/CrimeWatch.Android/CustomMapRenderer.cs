@@ -81,7 +81,7 @@ namespace CrimeWatch.Droid
                 case "Homicide Offenses":
                     marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.homicidePin));
                     break;
-                case "Sex Offenses, Forcible":
+                case "Sex Offenses":
                     marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.sexOffensePin));
                     break;
                 case "Suspicious Activity":
@@ -134,43 +134,6 @@ namespace CrimeWatch.Droid
 
         public Android.Views.View GetInfoWindow(Marker marker)
         {
-            var inflater = Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService) as Android.Views.LayoutInflater;
-
-            /*
-            if (inflater != null)
-            {
-                Android.Views.View view;
-
-                var customPin = GetCustomPin(marker);
-                if (customPin == null)
-                {
-                    throw new Exception("Custom pin not found");
-                }
-
-                if (customPin.Name.Equals("Xamarin"))
-                {
-                    view = inflater.Inflate(Resource.Layout.XamarinMapInfoWindow, null);
-                }
-                else
-                {
-                    view = inflater.Inflate(Resource.Layout.MapInfoWindow, null);
-                }
-
-                var infoTitle = view.FindViewById<TextView>(Resource.Id.InfoWindowTitle);
-                var infoSubtitle = view.FindViewById<TextView>(Resource.Id.InfoWindowSubtitle);
-
-                if (infoTitle != null)
-                {
-                    infoTitle.Text = marker.Title;
-                }
-                if (infoSubtitle != null)
-                {
-                    infoSubtitle.Text = marker.Snippet;
-                }
-
-                return view;
-            }
-            */
             return null;
         }
 

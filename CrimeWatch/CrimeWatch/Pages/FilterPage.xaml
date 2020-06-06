@@ -135,11 +135,11 @@
                                 </Button>
 
                                 <Button Grid.Row="2" Grid.Column="2" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Vehicle Theft" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
-                                ImageSource="VehicleTheftIcon.png" ContentLayout="Top, 0" FontSize="11" Clicked="OnIncidentTypeFilterClicked" x:Name="vehicle">
+                                ImageSource="VehicleTheftIcon.png" ContentLayout="Top, -10" FontSize="11" Clicked="OnIncidentTypeFilterClicked" x:Name="vehicle">
                                 </Button>
 
                                 <!--Buttons Row 4-->
-                                <Button Grid.Row="3" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Sex Offense" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                <Button Grid.Row="3" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Sex Offenses" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
                                 ImageSource="SexOffenseIcon.png" ContentLayout="Top, 0" FontSize="11.5" Clicked="OnIncidentTypeFilterClicked" x:Name="sexOffense">
                                 </Button>
 

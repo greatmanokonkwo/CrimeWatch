@@ -138,19 +138,9 @@ namespace CrimeWatch
                 incidentData = await _restService.GetCrimeDataAsync(await GenerateRequestUri());
             }
 
-            App.Database.ClearIncidents();
+            FillProperties(incidentData);
 
-            foreach (Incident incident in incidentData.Incidents)
-            {
-                // Set properties for incidents
-                incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
-                Address address = (await userLocator.GetAddressesForPositionAsync(new Plugin.Geolocator.Abstractions.Position(incident.Latitude, incident.Longitude))).First();
-                incident.FullAddress = $"{address.SubThoroughfare} {address.Thoroughfare} " +
-                    $"{address.SubLocality} {address.Locality} " +
-                    $"{address.SubAdminArea} {address.AdminArea}, " +
-                    $"{address.CountryName}";
-                incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");
-            }
+            App.Database.ClearIncidents();
 
             // For each incident, initialize a corresponding pin and add to map's list of pins
             foreach (Incident incident in incidentData.Incidents) 
@@ -171,6 +161,21 @@ namespace CrimeWatch
 
             // create map pins
             await CreatePins();
+        }
+
+        private async Task FillProperties(IncidentData incidentData) 
+        {
+            foreach (Incident incident in incidentData.Incidents)
+            {
+                // Set properties for incidents
+                incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
+                Address address = (await userLocator.GetAddressesForPositionAsync(new Plugin.Geolocator.Abstractions.Position(incident.Latitude, incident.Longitude))).First();
+                incident.FullAddress = $"{address.SubThoroughfare} {address.Thoroughfare} " +
+                    $"{address.SubLocality} {address.Locality} " +
+                    $"{address.SubAdminArea} {address.AdminArea}, " +
+                    $"{address.CountryName}";
+                incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");
+            }
         }
 
         async Task RunAnimation()
