@@ -112,11 +112,11 @@ namespace CrimeWatch.Pages
 
         async void OnBackClicked(object sender, EventArgs e) 
         {
+
             CrimeFilterer.DistanceFilter = Math.Abs(int.Parse(distanceEditor.Text));
             CrimeFilterer.TimeFrameFilter = (string)timeFrame.SelectedItem;
-            Debug.WriteLine(timeFrame.SelectedItem + " : " + CrimeFilterer.TimeFrameFilter);
            
-            await Navigation.PopToRootAsync();
+            await Navigation.PopAsync();
         }
 
         // BEWARE THIS IS EXTREMELY STUPID CODE. I'm just too tired to make anything nice rn

@@ -54,11 +54,11 @@ namespace CrimeWatch.Pages
         {
             activityIndicator.IsRunning = true;
 
-            App.Database.ClearIncidents();
+            CrimeFilterer.IncidentTypeFilter = "None";
 
             var incidents = await CrimeFilterer.Filter();
 
-            listView.ItemsSource = new List<Incident>();
+            listView.ItemsSource = incidents;
 
             numOfIncidentsLabel.Text = "0 Incidents";
 

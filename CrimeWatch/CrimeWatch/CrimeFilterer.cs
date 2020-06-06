@@ -1,5 +1,6 @@
 ﻿using CrimeWatch.Models;
 using CrimeWatch.Pages;
+using CrimeWatch.Services;
 using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
 using System;
@@ -13,6 +14,9 @@ namespace CrimeWatch
 {
     public static class CrimeFilterer
     {
+        // object for making calls to crimeometer API and getting back data 
+        private static RestService _restService = _restService = new RestService();
+
         // "Filter By" Page
         public static ContentPage filterPage = new FilterPage();
 
@@ -31,43 +35,51 @@ namespace CrimeWatch
         // Filter according to incideny type
         public static async Task<List<Incident>> Filter()
         {
-            List<Incident> unfilteredList = await App.Database.GetIncidentsAsync();
-            List<Incident> filteredList = null;
-            // First filter incidents by distance from user
-            var userLocator = CrossGeolocator.Current;
-            var userLocation = await userLocator.GetPositionAsync(); // get users position
-            filteredList = (from incident in unfilteredList
-                            where userLocation.CalculateDistance(new Position(incident.Latitude, incident.Longitude), GeolocatorUtils.DistanceUnits.Kilometers) < DistanceFilter
-                            select incident).ToList();
-
-            // Second filter incidents by time in which they occurred
-            filteredList = (from incident in filteredList
-                            where DateTime.Now.Subtract(Convert.ToDateTime(incident.Time)).TotalHours < GetTimeFrameInHours()
-                            select incident).ToList();
-
-
-
-            // Third filter incidents by incident type
-            // Skip over third filtering if the incident type filter is set to All
-            if (!IncidentTypeFilter.Equals("All"))
+            if (!IncidentTypeFilter.Equals("None"))
             {
-                // If the incident type is not set to other then filter based on the incident type
-                if (!IncidentTypeFilter.Equals("Other"))
-                {
-                    filteredList = (from incident in filteredList
-                                where IncidentTypeFilter.Contains(incident.Type)
+                List<Incident> unfilteredList = _restService.GetCrimeData().Incidents.ToList();
+                List<Incident> filteredList = null;
+                // First filter incidents by distance from user
+                IGeolocator userLocator = CrossGeolocator.Current;
+                var userLocation = await userLocator.GetPositionAsync(); // get users position
+                filteredList = (from incident in unfilteredList
+                                where userLocation.CalculateDistance(new Position(incident.Latitude, incident.Longitude), GeolocatorUtils.DistanceUnits.Kilometers) < DistanceFilter
                                 select incident).ToList();
-                }
-                // Other represents the crimes that are not explicitly mentioned in the incidentTypes array. These incident types are printed when the filter is sett to other
-                else
-                {
-                    filteredList = (from incident in filteredList
-                                    where !incidentTypes.Contains(incident.Type)
-                                    select incident).ToList();
-                }
-            }
 
-            return filteredList;
+                // Second filter incidents by time in which they occurred
+                filteredList = (from incident in filteredList
+                                where DateTime.Now.Subtract(Convert.ToDateTime(incident.Time)).TotalHours < GetTimeFrameInHours()
+                                select incident).ToList();
+
+
+
+                // Third filter incidents by incident type
+                // Skip over third filtering if the incident type filter is set to All
+                if (!IncidentTypeFilter.Equals("All"))
+                {
+                    // If the incident type is not set to other then filter based on the incident type
+                    if (!IncidentTypeFilter.Equals("Other"))
+                    {
+                        filteredList = (from incident in filteredList
+                                        where IncidentTypeFilter.Contains(incident.Type)
+                                        select incident).ToList();
+                    }
+                    // Other represents the crimes that are not explicitly mentioned in the incidentTypes array. These incident types are printed when the filter is sett to other
+                    else
+                    {
+                        filteredList = (from incident in filteredList
+                                        where !incidentTypes.Contains(incident.Type)
+                                        select incident).ToList();
+                    }
+                }
+
+                return filteredList;
+            }
+            else 
+            {
+                return new List<Incident>();
+            }   
+            
         }
 
         // returns the number of hours for each time frame 

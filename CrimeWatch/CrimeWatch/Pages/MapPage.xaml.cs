@@ -48,16 +48,15 @@ namespace CrimeWatch
 
             InitializeComponent();
 
-            IncidentTypeInfo.Type = "All";
             InfoFrame.BackgroundColor = IncidentTypeInfo.GetIncidentColor();
 
             _restService = new RestService();
 
-            userLocator = CrossGeolocator.Current;
-
             TopLabel.Text = $"Crimes Within A {CrimeFilterer.DistanceFilter}km Radius";
 
             SearchForCrime();
+
+            userLocator = CrossGeolocator.Current;
         }
 
 
@@ -72,16 +71,13 @@ namespace CrimeWatch
 
             TopLabel.Text = $"Crimes Within A {CrimeFilterer.DistanceFilter}km Radius";
 
-            activityIndicator.IsRunning = true;
-
-            // Create Pins 
             await CreatePins();
-
-            activityIndicator.IsRunning = false;
         }
 
         protected async Task CreatePins()
         {
+            activityIndicator.IsRunning = true;
+
             // Get list of crime incidents from local database, filtering according to the requested filter 
             Incident[] incidents = (await CrimeFilterer.Filter()).ToArray();
 
@@ -107,26 +103,31 @@ namespace CrimeWatch
 
                 // add pin
                 crimeMap.Pins.Add(pin);
-                if (crimeMap.Pins.Count > 0)
-                {
-                    var lastPin = crimeMap.Pins.First();
-
-                    // Move map to Location with crime pins
-                    MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(lastPin.Position.Latitude, lastPin.Position.Longitude), Distance.FromKilometers(4));
-                    crimeMap.MoveToRegion(mapSpan);
-                }
 
             }
+
+            if (crimeMap.Pins.Count > 0)
+            {
+                var lastPin = crimeMap.Pins.First();
+
+                // Move map to Location with crime pins
+                MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(lastPin.Position.Latitude, lastPin.Position.Longitude), Distance.FromKilometers(4));
+                crimeMap.MoveToRegion(mapSpan);
+            }
+
+            activityIndicator.IsRunning = false;
         }
 
         async void SearchForCrime()
         {
 
-            // Search Animation
-            runAnimation = true;
+            IncidentTypeInfo.Type = "All";
+
+            // Search Animation. Set runAnimation to have it do a search animations
+            runAnimation = false;
             RunAnimation();
 
-            IncidentData incidentData = null;
+            IncidentData incidentData;
 
             // get crime data 
             if (offline)
@@ -140,7 +141,16 @@ namespace CrimeWatch
 
             Incident[] incidents = incidentData.Incidents;
 
-            FillProperties(incidents);
+            for (int i = 0; i < incidents.Length; i++)
+            {
+                Incident incident = incidents[i];
+
+                // Set properties for incidents
+                incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
+                incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");
+            }
+
+            /*
 
             App.Database.ClearIncidents();
 
@@ -155,28 +165,13 @@ namespace CrimeWatch
                 await App.Database.SaveIncidentAsync(incident);
             }
 
+            */
+
             // stop search animation
             runAnimation = false;
 
-            // center location to where there are pins
-            var lastIncident = App.Database.GetIncidentsAsync().Result.First();
-            MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(lastIncident.Latitude, lastIncident.Longitude), Distance.FromKilometers(2.5));
-            crimeMap.MoveToRegion(mapSpan);
-
             // create map pins
             await CreatePins();
-        }
-
-        private async Task FillProperties(Incident[] incidents) 
-        {
-            for (int i = 0; i < incidents.Length; i++)
-            {
-                Incident incident = incidents[i];
-
-                // Set properties for incidents
-                incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
-                incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");
-            }
         }
 
         async Task RunAnimation()

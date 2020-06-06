@@ -48,8 +48,8 @@ namespace CrimeWatch.Droid
                     }
                     else
                     {
-                        // Permissions already granted - display a message.
                         break;
+                        // Permissions already granted - display a message.
                     }
                 }
             }

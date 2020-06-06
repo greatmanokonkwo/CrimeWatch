@@ -9,8 +9,8 @@
              NavigationPage.HasNavigationBar="False">
     
     <ContentPage.Content>
-        <ScrollView>
-            <Grid>
+        <ScrollView Padding="0">
+            <Grid Padding="0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -18,8 +18,8 @@
                 </Grid.RowDefinitions>
                 
 
-                <ImageButton Source="backIcon.png" BackgroundColor="Transparent" Clicked="OnBackClicked" Margin="30,20,0,15" HorizontalOptions="Start" VerticalOptions="Start"
-                             HeightRequest="20" WidthRequest="20"/>
+                <ImageButton Source="backIcon.png" BackgroundColor="Transparent" Clicked="OnBackClicked" Margin="28,22,0,0" HorizontalOptions="Start" VerticalOptions="Start" IsEnabled="True"
+                            Padding="0" HeightRequest="20" WidthRequest="20"/>
                 <Label Text="Filter By" HorizontalOptions="Center"
                        FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Center" FontSize="20" Margin="0,15,0,0"/>
 
@@ -41,7 +41,7 @@
                                        VerticalOptions="Start" HeightRequest="16" x:Name="DropDown1"/>
                             </Grid>
                         </Expander.Header>
-                        
+
                         <Grid Margin="0,20,0,0" VerticalOptions="Center">
 
                             <Grid.ColumnDefinitions>
