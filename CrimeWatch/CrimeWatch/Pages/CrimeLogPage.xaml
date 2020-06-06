@@ -45,14 +45,14 @@
                                                 <Label Text="{Binding Type}" HorizontalOptions="Start"
                                                     FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Start" FontSize="16" Margin="0"/>
 
-                                                <Image Grid.Column="1" Source="{Binding Icon}}" BackgroundColor="Transparent" HorizontalOptions="End" 
+                                                <Image Grid.Column="1" Source="{Binding Icon}" BackgroundColor="Transparent" HorizontalOptions="End" 
                                                     VerticalOptions="Start" HeightRequest="32"/>
                                             </Grid>
                                         </Expander.Header>
 
                                         <Grid Padding="0,10,0,0">
 
-                                            <Label Text="{Binding FullAddress}" HorizontalOptions="Start"
+                                            <Label Text="{Binding Description}" HorizontalOptions="Start"
                                                     FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Start" FontSize="12" Margin="0"/>
 
                                             <Label Grid.Column="1" Text="{Binding StandardTime}" HorizontalOptions="End"

@@ -33,8 +33,6 @@ namespace CrimeWatch.Models
 
         public string Icon { get; set; }
 
-        public string FullAddress { get; set; }
-
         public string StandardTime { get; set; }
 
     }

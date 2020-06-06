@@ -169,11 +169,6 @@ namespace CrimeWatch
             {
                 // Set properties for incidents
                 incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
-                Address address = (await userLocator.GetAddressesForPositionAsync(new Plugin.Geolocator.Abstractions.Position(incident.Latitude, incident.Longitude))).First();
-                incident.FullAddress = $"{address.SubThoroughfare} {address.Thoroughfare} " +
-                    $"{address.SubLocality} {address.Locality} " +
-                    $"{address.SubAdminArea} {address.AdminArea}, " +
-                    $"{address.CountryName}";
                 incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");
             }
         }
