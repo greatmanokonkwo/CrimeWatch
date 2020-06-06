@@ -28,13 +28,22 @@ namespace CrimeWatch.Pages
 
             activityIndicator.IsRunning = true;
 
-            var incidents = await CrimeFilterer.Filter();
+            var incidents = (await CrimeFilterer.Filter()).ToArray();
+
+            for (int i = 0; i < incidents.Length; i++)
+            {
+                Incident incident = incidents[i];
+
+                // Set visual properties for incidents
+                incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
+                incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");
+            }
 
             listView.ItemsSource = incidents;
 
             activityIndicator.IsRunning = false;
 
-            numOfIncidentsLabel.Text = $"{incidents.Count} Incidents";
+            numOfIncidentsLabel.Text = $"{incidents.Length} Incidents";
             InfoFrame.BackgroundColor = IncidentTypeInfo.GetIncidentColor();
         }
 

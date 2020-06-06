@@ -141,15 +141,6 @@ namespace CrimeWatch
 
             Incident[] incidents = incidentData.Incidents;
 
-            for (int i = 0; i < incidents.Length; i++)
-            {
-                Incident incident = incidents[i];
-
-                // Set properties for incidents
-                incident.Icon = IncidentTypeInfo.GetIncidentIcon(incident.Type);
-                incident.StandardTime = Convert.ToDateTime(incident.Time).ToString("dddd, dd MMMM yyyy");
-            }
-
             /*
 
             App.Database.ClearIncidents();
