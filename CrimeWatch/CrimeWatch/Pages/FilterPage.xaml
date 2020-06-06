@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CrimeWatch.Pages.FilterPage"
+             xmlns:customs="clr-namespace:CrimeWatch.CustomElements"
+             NavigationPage.HasNavigationBar="False">
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+
+                <ImageButton Source="backIcon.png" BackgroundColor="Transparent" Clicked="OnBackClicked" Margin="30,20,0,15" HorizontalOptions="Start" VerticalOptions="Start"
+                             HeightRequest="20" WidthRequest="20"/>
+                <Label Text="Filter By" HorizontalOptions="Center"
+                       FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Center" FontSize="20" Margin="0,15,0,0"/>
+
+                <!--This is extremely stupid code. I'm just too tired to make anything nice rn-->
+                <StackLayout Grid.Row="1" Spacing="0">
+
+                    <Expander Margin="28" Tapped="OnExpanderTapped">
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="Distance" HorizontalOptions="Start"
+                                    FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Center" FontSize="16" Margin="0"/>
+
+                                <Image Grid.Column="1" Source="dropDownArrowIcon.png" BackgroundColor="Transparent" HorizontalOptions="End" 
+                                       VerticalOptions="Start" HeightRequest="16" x:Name="DropDown1"/>
+                            </Grid>
+                        </Expander.Header>
+                        
+                        <Grid Margin="0,20,0,0" VerticalOptions="Center">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="Search Radius In Kilometers" VerticalOptions="Center"
+                            FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Start" FontSize="16" Margin="0" TextColor="DarkOrange"/>
+
+                            <Frame Grid.Column="1" CornerRadius="6" HeightRequest="40" WidthRequest="80" VerticalOptions="Center" BackgroundColor="LightGray" HasShadow="False" Padding="0" HorizontalOptions="End">
+                                <customs:CustomEditor VerticalOptions="Center" MaxLength="5" x:Name="distanceEditor"
+                                       FontFamily="{StaticResource SofiaProMedium}" Keyboard="Numeric" FontSize="16" HorizontalOptions="Center"/>
+                            </Frame>
+
+                        </Grid>
+
+                    </Expander>
+
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" Margin="28,0,28,0"/>
+
+                    <Expander Margin="28" Tapped="OnExpanderTapped2" x:Name="typeFilterExpander">
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="Incident Type" HorizontalOptions="Start"
+                            FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Center" FontSize="16" Margin="0"/>
+
+                                <Image Grid.Column="1" Source="dropDownArrowIcon.png" BackgroundColor="Transparent" HorizontalOptions="End" x:Name="DropDown2" VerticalOptions="Start" HeightRequest="16"/>
+
+                            </Grid>
+                        </Expander.Header>
+
+                        <StackLayout>
+
+                            <BoxView BackgroundColor="LightGray" HeightRequest="1" Margin="0,35,0,5"/>
+
+                            <Grid Padding="8,20,8,0" ColumnSpacing="16" RowSpacing="16" HorizontalOptions="FillAndExpand">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="88"/>
+                                    <RowDefinition Height="88"/>
+                                    <RowDefinition Height="88"/>
+                                    <RowDefinition Height="88"/>
+                                    <RowDefinition Height="88"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Buttons Row 1-->
+                                <Button CornerRadius="34" BackgroundColor="#EBEAEA" Text="Arson" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="ArsonIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="arson">
+                                </Button>
+
+                                <Button Grid.Column="1" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Assault" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"  
+                                ImageSource="AssaultIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="assault">
+                                </Button>
+
+                                <Button Grid.Column="2" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Burglary" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"  
+                                ImageSource="BurglaryIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="burglary">
+                                </Button>
+
+                                <!--Buttons Row 2-->
+                                <Button Grid.Row="1" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Disruption" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"  
+                                ImageSource="DisruptionIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="disruption">
+                                </Button>
+
+                                <Button Grid.Row="1" Grid.Column="1" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Drug" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"  
+                                ImageSource="DrugIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="drugs">
+                                </Button>
+
+                                <Button Grid.Row="1" Grid.Column="2" CornerRadius="34" BackgroundColor="#EBEAEA" Text="DUI" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="DUIIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="dui">
+                                </Button>
+
+                                <!--Buttons Row 3-->
+                                <Button Grid.Row="2" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Homicide" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="HomicideIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="homicide">
+                                </Button>
+
+                                <Button Grid.Row="2" Grid.Column="1" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Abduction" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="AbductionIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="abduction">
+                                </Button>
+
+                                <Button Grid.Row="2" Grid.Column="2" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Vehicle Theft" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="VehicleTheftIcon.png" ContentLayout="Top, 0" FontSize="11" Clicked="OnIncidentTypeFilterClicked" x:Name="vehicle">
+                                </Button>
+
+                                <!--Buttons Row 4-->
+                                <Button Grid.Row="3" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Sex Offense" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="SexOffenseIcon.png" ContentLayout="Top, 0" FontSize="11.5" Clicked="OnIncidentTypeFilterClicked" x:Name="sexOffense">
+                                </Button>
+
+                                <Button Grid.Row="3" Grid.Column="1" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Suspicious" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="SuspiciousIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="suspicious">
+                                </Button>
+
+                                <Button Grid.Row="3" Grid.Column="2" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Theft" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="TheftIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="theft">
+                                </Button>
+
+                                <!--Buttons Row 5-->
+                                <Button Grid.Row="4" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Vandalism" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="VandalismIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="vandalism">
+                                </Button>
+
+                                <Button Grid.Row="4" Grid.Column="1" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Weapon" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray"
+                                ImageSource="WeaponIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="weapon">
+                                </Button>
+
+                                <Button Grid.Row="4" Grid.Column="2" CornerRadius="34" BackgroundColor="#EBEAEA" Text="Other" FontFamily="{StaticResource SofiaProMedium}" TextColor="DimGray" 
+                                ImageSource="OtherIcon.png" ContentLayout="Top, 0" FontSize="12" Clicked="OnIncidentTypeFilterClicked" x:Name="other">
+                                </Button>
+
+                            </Grid>
+
+                        </StackLayout>
+                        
+                    </Expander>
+
+                    <BoxView BackgroundColor="LightGray" HeightRequest="1" Margin="28,0,28,0"/>
+
+                    <Expander Margin="28" Tapped="OnExpanderTapped3" x:Name="timeframeFilterExpander">
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="Time Frame" HorizontalOptions="Start"
+                            FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Center" FontSize="16" Margin="0"/>
+
+                                <Image Grid.Column="1" Source="dropDownArrowIcon.png" BackgroundColor="Transparent" HorizontalOptions="End" x:Name="DropDown3" VerticalOptions="Start" HeightRequest="16"/>
+                            </Grid>
+                        </Expander.Header>
+
+                        <Frame CornerRadius="8" HeightRequest="60" VerticalOptions="Center" BackgroundColor="LightGray" HasShadow="False" Padding="10,0,10,0" Margin="0,20,0,0">
+                            <customs:CustomPicker x:Name="timeFrame" HorizontalOptions="FillAndExpand" FontFamily="{StaticResource SofiaProMedium}" FontSize="17" TitleColor="Black" TextColor="DarkOrange">
+                                <Picker.Items>
+                                    <x:String>12 Hours</x:String>
+                                    <x:String>24 Hours</x:String>
+                                    <x:String>2 Days</x:String>
+                                    <x:String>4 Days</x:String>
+                                    <x:String>1 Week</x:String>
+                                    <x:String>2 Weeks</x:String>
+                                    <x:String>1 Month</x:String>
+                                </Picker.Items>
+                            </customs:CustomPicker>
+                        </Frame>
+
+                    </Expander>
+
+                </StackLayout>
+
+                <Frame Grid.Row="1" CornerRadius="40" WidthRequest="110" HeightRequest="12" VerticalOptions="Center" HorizontalOptions="Center" Margin="20" BackgroundColor="Black" Padding="13" Opacity="0" x:Name="filterAppliedNotification">
+                    <Label Grid.Column="1"  Text="" HorizontalOptions="Center" VerticalOptions="Center"
+                       FontFamily="{StaticResource SofiaProMedium}" HorizontalTextAlignment="Center" FontSize="13" Margin="0,-4,0,0" TextColor="White" x:Name="filterAppliedNotificationText"/>
+                </Frame>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

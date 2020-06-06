@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:crimewatch="clr-namespace:CrimeWatch" xmlns:crimewatch1="clr-namespace:CrimeWatch.Pages"
+             mc:Ignorable="d"
+             x:Class="CrimeWatch.Pages.MainNavigationPage"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             android:TabbedPage.ToolbarPlacement="Bottom" BarBackgroundColor="{OnPlatform Android=White}"
+             NavigationPage.HasNavigationBar="False">
+    
+  <!--Pages can be added as references or inline-->
+    <crimewatch:MapPage Title="Crime Map" IconImageSource="mapIcon.png"/>
+    <crimewatch1:CrimeLogPage Title="Crime Log" IconImageSource="crimeLogIcon.png"/>
+</TabbedPage>
